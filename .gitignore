@@ -391,4 +391,5 @@ docker-compose.yml
 .env
 .env.staging
 .env.production
+.vscode
 dist
