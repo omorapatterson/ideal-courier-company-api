@@ -389,6 +389,6 @@ Temporary Items
 # Local
 docker-compose.yml
 .env
-.env.stagin
+.env.staging
 .env.production
 dist
