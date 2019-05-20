@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/52473b7a-d3a2-4cfe-9dcd-1728e3fc7587/resourceGroups/ccifrance-si-digipilote/providers/Microsoft.Web/sites/digipilote-backend",
+    "appService.deploySubpath": "",
+    "docker.defaultRegistryPath": "digipilote.azurecr.io"
+}
