@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 't
 import { Task } from '../task/task.entity';
 
 @Entity()
-export class TaskLog {
+export class TaskDriver {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

@@ -20,4 +20,4 @@ import { TaskWaypointRepository } from './task-waypoint.repository';
     TaskWaypointService
   ]
 })
-export class RoleModule {}
+export class TaskWaypointModule {}

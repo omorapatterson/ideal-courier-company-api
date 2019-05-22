@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Task } from '../task/task.entity';
+import { TaskDriver } from '../task-driver/task-driver.entity';
 
 @Entity()
-export class TaskLog {
+export class TaskDriverWaypoint {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -18,7 +18,7 @@ export class TaskLog {
   @Column()
   updatedAt: Date;
 
-  @ManyToOne(type => Task)
-  @JoinColumn({ name: "task", referencedColumnName: 'id' })
-  task: Task;
+  @ManyToOne(type => TaskDriver)
+  @JoinColumn({ name: "task_driver", referencedColumnName: 'id' })
+  taskDriver: TaskDriver;
 }

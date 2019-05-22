@@ -20,4 +20,4 @@ import { TaskLogRepository } from './task-log.repository';
     TaskLogService
   ]
 })
-export class RoleModule {}
+export class TaskLogModule {}

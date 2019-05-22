@@ -20,4 +20,4 @@ import { TaskRepository } from './task.repository';
     TaskService
   ]
 })
-export class RoleModule {}
+export class TaskModule {}

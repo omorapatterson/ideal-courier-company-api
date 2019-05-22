@@ -17,8 +17,4 @@ export class Task {
 
   @Column()
   updatedAt: Date;
-
-  @ManyToOne(type => Company)
-  @JoinColumn({ name: "company", referencedColumnName: 'id' })
-  company: Company;
 }

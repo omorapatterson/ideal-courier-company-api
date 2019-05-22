@@ -20,4 +20,4 @@ import { DriverRepository } from './driver.repository';
         DriverService,
     ],
 })
-export class UserModule { }
+export class DriverModule { }

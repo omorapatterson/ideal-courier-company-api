@@ -20,4 +20,4 @@ import { DriverLogRepository } from './driver-log.repository';
     DriverLogService
   ]
 })
-export class RoleModule {}
+export class DriverLogModule {}

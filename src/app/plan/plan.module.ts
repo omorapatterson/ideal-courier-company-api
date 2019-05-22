@@ -20,4 +20,4 @@ import { PlanRepository } from './plan.repository';
     PlanService
   ]
 })
-export class RoleModule {}
+export class PlanModule {}

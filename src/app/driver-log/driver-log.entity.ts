@@ -1,6 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Driver } from '../driver/driver.entity';
-import { Task } from '../task/Task.entity';
 
 @Entity()
 export class DriverLog {

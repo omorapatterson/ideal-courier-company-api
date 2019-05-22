@@ -20,4 +20,4 @@ import { TaskSchedulerRepository } from './task-scheduler.repository';
     TaskSchedulerService
   ]
 })
-export class RoleModule {}
+export class TaskSchedulerModule {}

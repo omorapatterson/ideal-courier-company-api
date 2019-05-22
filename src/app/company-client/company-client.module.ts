@@ -20,4 +20,4 @@ import { CompanyClientRepository } from './company-client.repository';
         CompanyClientService,
     ],
 })
-export class UserModule { }
+export class CompanyClientModule { }

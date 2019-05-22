@@ -20,4 +20,4 @@ import { TeamRepository } from './team.repository';
     TeamService
   ]
 })
-export class RoleModule {}
+export class TeamModule {}

@@ -20,4 +20,4 @@ import { AuthModule } from '../common/auth/auth.module';
         CompanyPlanService,
     ]
 })
-export class ActivitySectorModule { }
+export class CompanyPlanModule { }

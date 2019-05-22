@@ -45,8 +45,8 @@ export class TaskLogController {
     @Put(':id')
     @Roles('expert')
     @UsePipes(new ValidationPipe({ skipMissingProperties: true }))
-    async update(@Param('id') id: string, @Body() user: UpdateTaskLogDto){
-        return this.taskLogService.update(id, user)
+    async update(@Param('id') id: string, @Body() taskLog: UpdateTaskLogDto){
+        return this.taskLogService.update(id, taskLog)
         .then((taskLog: TaskLog) => {
             return this.getITaskLog(taskLog);
         })
