@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Task } from '../task/Task.entity';
+import { Task } from '../task/task.entity';
 
 @Entity()
 export class TaskWaypoint {

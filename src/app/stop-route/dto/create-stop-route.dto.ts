@@ -1,9 +1,10 @@
 import { IsString, IsIn, IsByteLength, IsEmail, MinLength } from 'class-validator';
 
-export class UpdateTaskLogDto {
+export class CreateStopRouteDto {
     @IsString()   
     readonly name: string;
 
-    @IsString()   
-    readonly description: string;  
+    @IsString()
+    readonly description: string; 
+
 }

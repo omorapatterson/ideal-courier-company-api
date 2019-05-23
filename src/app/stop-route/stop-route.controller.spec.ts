@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TaskLogController } from './task-log.controller';
+import { StopRouteController } from './stop-route.controller';
 
-describe('TaskLog Controller', () => {
-  let controller: TaskLogController;
+describe('Role Controller', () => {
+  let controller: StopRouteController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [TaskLogController],
+      controllers: [StopRouteController],
     }).compile();
 
-    controller = module.get<TaskLogController>(TaskLogController);
+    controller = module.get<StopRouteController>(StopRouteController);
   });
 
   it('should be defined', () => {

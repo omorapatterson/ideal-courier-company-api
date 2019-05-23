@@ -1,6 +1,6 @@
 import { IsString, IsIn, IsByteLength, IsEmail, MinLength } from 'class-validator';
 
-export class CreateTaskLogDto {
+export class CreateTaskDriverLogDto {
     @IsString()   
     readonly name: string;
 

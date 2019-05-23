@@ -1,4 +1,4 @@
-export interface ITaskLog {
+export interface IRoute {
     readonly id: string;
     readonly name: string;
     readonly description: string;
