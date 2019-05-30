@@ -19,7 +19,7 @@ export class UpdateCompanyClientDto {
     readonly email: string;
 
     @IsString()
-    @MinLength(5, {
+    @MinLength(4, {
         message: "Invalid password length"
     })
     readonly password?: string;
@@ -27,6 +27,4 @@ export class UpdateCompanyClientDto {
     @IsUUID()
     readonly companyId: string;
 
-    @IsUUID()
-    readonly teamId: string;   
 }

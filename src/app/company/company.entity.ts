@@ -17,7 +17,7 @@ export class Company {
     @Column()
     phone: string;
 
-    @Column()
+    /*@Column()
     countryCode: string;
     
     @Column()
@@ -36,7 +36,7 @@ export class Company {
     autoAssignType: string;
     
     @Column()
-    assignRequestExpire: number; 
+    assignRequestExpire: number; */
 
     @Column()
     email: string;
@@ -65,17 +65,17 @@ export class Company {
     @Column()
     updatedAt: Date;
 
-    @ManyToOne(type => Plan)
-    @JoinColumn({ name: "plan", referencedColumnName: 'id' })
-    plan: Plan;
+    /*@ManyToOne(type => Plan)
+    @JoinColumn({ name: "company_plan", referencedColumnName: 'id' })
+    companyPlan: Plan;
     
     @OneToMany(type => User, user => user.company)
     users: User[];
 
     @OneToMany(type => Task, task => task.company)
-    task: Task[];
+    tasks: Task[];
 
     @OneToMany(type => Team, team => team.company)
-    teams: Team[];
+    teams: Team[];*/
 
 }

@@ -17,9 +17,6 @@ export class Driver {
     email: string;
 
     @Column({ length: 50 })
-    userName: string;
-
-    @Column({ length: 50 })
     phone: string;
 
     @Column()
@@ -31,46 +28,46 @@ export class Driver {
     @Column({ default: false })
     available: boolean;
 
-    @Column()
+    @Column({ default: false })
     transportType: string;
 
-    @Column()
+    @Column({ default: false })
     status: string;
 
-    @Column()
+    @Column({ default: false })
     transportDescription: string;
 
-    @Column()
+    @Column({nullable: true})
     lastLogin: Date;
 
-    @Column()
+    @Column({nullable: true})
     lastOnline: Date;
 
-    @Column()
+    @Column({nullable: true})
     locationLat: string;
 
-    @Column()
+    @Column({nullable: true})
     locationLon: string;
 
-    @Column()
+    @Column({nullable: true})
     forgotPassCode: string;
 
-    @Column()
+    @Column({nullable: true})
     token: string;
 
-    @Column()
+    @Column({nullable: true})
     deviceId: string;
 
-    @Column()
+    @Column({nullable: true})
     devicePlatform: string;
 
-    @Column()
+    @Column({nullable: true})
     image: string;
 
-    @Column()
+    @Column({nullable: true})
     language: string;
 
-    @Column()
+    @Column({nullable: true})
     rating: number;
 
     @Column()

@@ -7,7 +7,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
 
-    async createUser(userDto: CreateUserDto) {
+    async createUser(userDto: CreateUserDto, companyId: string) {
         const user: User = this.create();
         user.firstName = userDto.firstName;
         user.lastName = userDto.lastName;
@@ -15,6 +15,10 @@ export class UserRepository extends Repository<User> {
         const salt: string = bcrypt.genSaltSync(10);
         user.password = await bcrypt.hash(userDto.password, salt);
         user.role = UserRole[String(userDto.role).toUpperCase()];
+        user.language = userDto.language;
+        user.phone = userDto.phone;
+        //user.lastLogin = null;
+        user.company = <any>{ id: companyId };
         user.updatedAt = new Date();
         user.createdAt = new Date();
         return this.save(user);
@@ -25,6 +29,7 @@ export class UserRepository extends Repository<User> {
         user.firstName = userDto.firstName ? userDto.firstName : user.firstName;
         user.lastName = userDto.lastName ? userDto.lastName : user.lastName;
         user.email = userDto.email ? userDto.email : user.email;
+        user.phone = userDto.phone ? userDto.phone : user.phone;
 
         if (userDto.password) {
             const salt: string = bcrypt.genSaltSync(10);
@@ -71,7 +76,7 @@ export class UserRepository extends Repository<User> {
     }
 
     async deleteUser(user: User) {
-        user.isDeleted = true;
+        //user.isDeleted = true;
         user.updatedAt = new Date();
         return this.save(user);
     }

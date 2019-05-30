@@ -17,8 +17,8 @@ import { Roles } from '../common/decorator/roles.decorator';
 import { ErrorResult } from '../common/error-manager/errors';
 import { ErrorManager } from '../common/error-manager/error-manager';
 //
-import { CreateTaskSchedulerDto } from './dto/create-task-scheduler.dto';
-import { UpdateTaskSchedulerDto } from './dto/update-task-scheduler.dto';
+import { CreateSchedulerDto } from './dto/create-task-scheduler.dto';
+import { UpdateSchedulerDto } from './dto/update-task-scheduler.dto';
 import { ITaskScheduler } from './interfaces/task-scheduler.interface';
 import { TaskScheduler } from './task-scheduler.entity';
 import { TaskSchedulerService } from './task-scheduler.service';
@@ -32,8 +32,8 @@ export class TaskSchedulerController {
     @Post()
     //@Roles('expert')
     @UsePipes(new ValidationPipe())
-    async create(@Body() taskScheduler: CreateTaskSchedulerDto) {
-        return this.taskSchedulerService.create(taskScheduler)
+    async create(@Body() taskScheduler: CreateSchedulerDto, @Body() taskId: string) {
+        return this.taskSchedulerService.create(taskScheduler, taskId)
         .then((taskScheduler: TaskScheduler) => {
             return this.getITaskScheduler(taskScheduler);
         })
@@ -45,7 +45,7 @@ export class TaskSchedulerController {
     @Put(':id')
     @Roles('expert')
     @UsePipes(new ValidationPipe({ skipMissingProperties: true }))
-    async update(@Param('id') id: string, @Body() taskScheduler: UpdateTaskSchedulerDto){
+    async update(@Param('id') id: string, @Body() taskScheduler: UpdateSchedulerDto){
         return this.taskSchedulerService.update(id, taskScheduler)
         .then((taskScheduler: TaskScheduler) => {
             return this.getITaskScheduler(taskScheduler);
@@ -95,8 +95,6 @@ export class TaskSchedulerController {
     getITaskScheduler(TaskScheduler: TaskScheduler): ITaskScheduler {
         return {
             id: TaskScheduler.id,
-            name: TaskScheduler.name,
-            description: TaskScheduler.description,           
             createdAt: TaskScheduler.createdAt,
             updatedAt: TaskScheduler.updatedAt
         };

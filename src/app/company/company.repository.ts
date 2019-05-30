@@ -18,6 +18,8 @@ export class CompanyRepository extends Repository<Company> {
         company.city = companyDto.city;
         company.state = companyDto.state;
         company.zip = companyDto.zip;
+        company.language = companyDto.language;
+        company.driverAssignRadius = companyDto.driverAssignRadius;
         company.updatedAt = new Date();
         company.createdAt = new Date();
         company = await this.save(company);

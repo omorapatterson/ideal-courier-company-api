@@ -18,8 +18,11 @@ export class UpdateDriverDto {
     })
     readonly email: string;
 
+    @IsString()   
+    readonly phone: string;
+
     @IsString()
-    @MinLength(5, {
+    @MinLength(3, {
         message: "Invalid password length"
     })
     readonly password?: string;
@@ -28,5 +31,5 @@ export class UpdateDriverDto {
     readonly companyId: string;
 
     @IsUUID()
-    readonly teamId: string;   
+    readonly teamId: string;
 }

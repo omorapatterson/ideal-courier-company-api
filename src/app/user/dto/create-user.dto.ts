@@ -13,6 +13,12 @@ export class CreateUserDto {
     })
     readonly lastName: string;
 
+    @IsString()   
+    readonly language: string;
+
+    @IsString()   
+    readonly phone: string;
+
     @IsEmail({}, {
         message: "Invalid email format"
     })

@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import { PlanRepository } from './plan.repository';
 import { Plan } from './plan.entity';
-import { CreatePlanDto } from './dto/plan.dto';
+import { CreatePlanDto } from './dto/create-plan.dto';
 import { ConfigService } from '../common/config/config.service';
 import { IPlan } from './interfaces/plan.interface';
 import { UpdatePlanDto } from './dto/update-role.dto';

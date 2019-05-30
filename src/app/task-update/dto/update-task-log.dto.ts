@@ -1,10 +1,14 @@
-export interface ITaskDriver {
+import { IsString, IsIn, IsByteLength, IsEmail, MinLength } from 'class-validator';
 
+export class UpdateTaskLogDto {
+    
     readonly id: string;
 
     readonly comments: string;
 
     readonly description: string;  
+
+    readonly ipAddress: string;
 
     readonly lat: string;
 
@@ -19,5 +23,4 @@ export interface ITaskDriver {
     readonly createdAt: Date;
 
     readonly updatedAt: Date;
-
 }

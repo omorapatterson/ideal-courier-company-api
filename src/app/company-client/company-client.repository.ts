@@ -13,7 +13,9 @@ export class CompanyClientRepository extends Repository<CompanyClient> {
         companyClient.lastName = companyClientDto.lastName;
         companyClient.email = companyClientDto.email;
         companyClient.company = <any>{ id: companyClientDto.companyId };
-        companyClient.team = <any>{ id: companyClientDto.teamId };
+        //companyClient.team = <any>{ id: companyClientDto.teamId };
+        const salt: string = bcrypt.genSaltSync(10);
+        companyClient.password = await bcrypt.hash(companyClientDto.password, salt);
         companyClient.updatedAt = new Date();
         companyClient.createdAt = new Date();
         return this.save(companyClient);

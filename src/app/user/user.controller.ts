@@ -23,16 +23,16 @@ import { ErrorManager } from '../common/error-manager/error-manager';
 import { User } from './user.entity';
 
 @Controller('users')
-@UseGuards(AuthGuard(), RolesGuard)
+//@UseGuards(AuthGuard(), RolesGuard)
 export class UserController {
 
     constructor(private readonly userService: UserService) { }
 
     @Post()
-    @Roles('expert')
-    @UsePipes(new ValidationPipe())
-    async create(@Body() user: CreateUserDto) {
-        return this.userService.create(user)
+    //@Roles('expert')
+    //@UsePipes(new ValidationPipe())
+    async create(@Body() user: CreateUserDto, @Body() companyId: string) {
+        return this.userService.create(user, companyId)
             .then((user: User) => {
                 return this.getIUser(user);
             })
@@ -97,6 +97,9 @@ export class UserController {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            language: user.language,
+            phone: user.phone,
+            //lastLogin: user.lastLogin,
             role: user.role,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,

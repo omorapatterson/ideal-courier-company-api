@@ -6,46 +6,46 @@ export class TaskScheduler {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({nullable: true})
   repeatEach: number;
 
-  @Column()
+  @Column({nullable: true})
   intervalTime: string;
 
-  @Column()
+  @Column({nullable: true})
   monthOption: string;
 
-  @Column()
+  @Column({nullable: true})
   monday: number;
 
-  @Column()
+  @Column({nullable: true})
   tuesday: number;
 
-  @Column()
+  @Column({nullable: true})
   wednesday: number;
 
-  @Column()
+  @Column({nullable: true})
   thursday: number;
 
-  @Column()
+  @Column({nullable: true})
   friday: number;
 
-  @Column()
+  @Column({nullable: true})
   saturday: number;
 
-  @Column()
+  @Column({nullable: true})
   sunday: number;
 
-  @Column()
+  @Column({nullable: true})
   finish: string;
   
-  @Column()
+  @Column({nullable: true})
   finishDate: Date;
 
-  @Column()
+  @Column({nullable: true})
   finishAfterRepetitions: number;
 
-  @Column()
+  @Column({nullable: true})
   repetitions: number;
 
   @Column()

@@ -12,6 +12,7 @@ export class DriverRepository extends Repository<Driver> {
         driver.firstName = driverDto.firstName;
         driver.lastName = driverDto.lastName;
         driver.email = driverDto.email;
+        driver.phone = driverDto.phone;
         const salt: string = bcrypt.genSaltSync(10);
         driver.password = await bcrypt.hash(driverDto.password, salt);
         driver.company = <any>{ id: driverDto.companyId };

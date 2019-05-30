@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { Company } from '../company/company.entity';
+import { Role } from '../role/role.entity';
 
 export enum UserRole {
     SUPER_ADMIN = 'root',
@@ -10,21 +11,34 @@ export enum UserRole {
 
 @Entity()
 export class User {
+
     @PrimaryGeneratedColumn('uuid')
     id: string;
-
-    @Column({ length: 50 })
-    firstName: string;
-
-    @Column({ length: 50 })
-    lastName: string;
+    
+    @Column({ default: false })
+    isDeleted?: boolean;
 
     @Column()
     email: string;
 
+    @Column({ length: 50 })
+    firstName: string;
+
+    @Column()
+    language: string;
+    
+    @Column({nullable: true})
+    lastLogin?: Date;
+    
+    @Column({ length: 50 })
+    lastName: string;
+    
     @Column()
     password: string;
 
+    @Column()
+    phone: string;
+    
     @Column({
         type: 'enum',
         enum: UserRole,
@@ -32,8 +46,8 @@ export class User {
     })
     role: UserRole;
 
-    @Column({ default: false })
-    isDeleted: boolean;
+    @Column({nullable: true})
+    verificationCode: string;
 
     @Column()
     createdAt: Date;
@@ -44,4 +58,5 @@ export class User {
     @ManyToOne(type => Company)
     @JoinColumn({ name: "company", referencedColumnName: 'id' })
     company: Company;
+
 }

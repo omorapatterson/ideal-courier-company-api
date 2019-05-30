@@ -95,7 +95,12 @@ export class TaskDriverController {
     getItaskDriver(taskDriver: TaskDriver): ITaskDriver {
         return {
             id: taskDriver.id,
-            name: taskDriver.name,
+            comments: taskDriver.comments,
+            lat: taskDriver.lat,
+            lon: taskDriver.lon,
+            pieces: taskDriver.pieces,
+            taskDate: taskDriver.taskDate,
+            transType: taskDriver.transType,
             description: taskDriver.description,           
             createdAt: taskDriver.createdAt,
             updatedAt: taskDriver.updatedAt

@@ -1,10 +1,12 @@
-export interface ITaskDriver {
+export interface ITaskLog {
 
     readonly id: string;
 
     readonly comments: string;
 
     readonly description: string;  
+
+    readonly ipAddress: string;
 
     readonly lat: string;
 

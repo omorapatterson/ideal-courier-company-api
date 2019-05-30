@@ -1,4 +1,5 @@
 import { IsString, IsInt, IsEmail, IsUUID } from 'class-validator';
+import { CreateUserDto } from '../../user/dto/create-user.dto'
 
 export class CreateCompanyDto {
     @IsString()
@@ -21,4 +22,16 @@ export class CreateCompanyDto {
 
     @IsInt()
     readonly zip: number;
+
+    @IsString()
+    readonly language: string;
+    
+    @IsInt()
+    readonly driverAssignRadius: number;
+
+}
+
+export class RegisterCompanyDto {
+    readonly company: CreateCompanyDto;
+    readonly user: CreateUserDto;
 }

@@ -8,7 +8,6 @@ export class TaskDriverRepository extends Repository<TaskDriver> {
 
     async createtaskDriver(taskDriverDto: CreateTaskDriverDto) {
         const taskDriver: TaskDriver = this.create();
-        taskDriver.name = taskDriverDto.name;
         taskDriver.description = taskDriverDto.description;
         taskDriver.updatedAt = new Date();
         taskDriver.createdAt = new Date();
@@ -17,7 +16,6 @@ export class TaskDriverRepository extends Repository<TaskDriver> {
 
     async updatetaskDriver(id: string, taskDriverDto: UpdateTaskDriverDto) {
         const taskDriver: TaskDriver = await this.gettaskDriver(id);
-        taskDriver.name = taskDriverDto.name? taskDriver.name : taskDriver.name;
         taskDriver.description = taskDriverDto.description ? taskDriver.description : taskDriver.description;     
         taskDriver.updatedAt = new Date();
         return this.save(taskDriver);

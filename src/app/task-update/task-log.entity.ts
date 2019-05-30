@@ -7,8 +7,7 @@ import { Route } from '../route/route.entity';
 import { Stop } from '../stop/stop.entity';
 
 @Entity()
-export class TaskDriver {
-
+export class TaskLog {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -61,5 +60,4 @@ export class TaskDriver {
   @ManyToOne(type => Stop)
   @JoinColumn({ name: "stop", referencedColumnName: 'id' })
   stop: Stop;
-  
 }

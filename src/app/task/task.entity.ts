@@ -29,7 +29,7 @@ export class Task {
   @Column()
   pieces: number;
 
-  @Column()
+  @Column({nullable: true})
   taskDate: Date;
 
   @Column()
@@ -41,7 +41,7 @@ export class Task {
   @Column()
   updatedAt: Date;
 
-  @ManyToOne(type => Company)
+  /*@ManyToOne(type => Company)
   @JoinColumn({ name: "company", referencedColumnName: 'id' })
   company: Company;
 
@@ -59,5 +59,5 @@ export class Task {
   
   @ManyToOne(type => Stop)
   @JoinColumn({ name: "stop", referencedColumnName: 'id' })
-  stop: Stop;
+  stop: Stop;*/
 }

@@ -17,24 +17,24 @@ import { Roles } from '../common/decorator/roles.decorator';
 import { ErrorResult } from '../common/error-manager/errors';
 import { ErrorManager } from '../common/error-manager/error-manager';
 //
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-Task.dto';
+import { CreateTaskDto, CreateTaskWithSchedulerDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { ITask } from './interfaces/task.interface';
-import { Task } from './Task.entity';
-import { TaskService } from './Task.service';
+import { Task } from './task.entity';
+import { TaskService } from './task.service';
 
 
-@Controller('Tasks')
+@Controller('tasks')
 //@UseGuards(AuthGuard(), RolesGuard)
 export class TaskController {
 
     constructor(private readonly taskService: TaskService) { }
 
     @Post()
-    @Roles('expert')
+    //@Roles('expert')
     @UsePipes(new ValidationPipe())
-    async create(@Body() task: CreateTaskDto) {
-        return this.taskService.create(task)
+    async create(@Body() taskScheduler: CreateTaskWithSchedulerDto) {
+        return this.taskService.create(taskScheduler.task, taskScheduler.scheduler)
             .then((task: Task) => {
                 return this.getITask(task);
             })
@@ -93,13 +93,19 @@ export class TaskController {
         });
     }
 
-    getITask(Task: Task): ITask {
+    getITask(task: Task): ITask {
         return {
-            id: Task.id,
-            name: Task.name,
-            description: Task.description,
-            createdAt: Task.createdAt,
-            updatedAt: Task.updatedAt
+            id: task.id,
+            description: task.description,
+            comments: task.comments,
+            ipAddress: task.ipAddress,
+            lat: task.lat,
+            lon: task.lon,
+            pieces: task.pieces,
+            taskDate: task.taskDate,            
+            transType: task.description,
+            createdAt: task.createdAt,
+            updatedAt: task.updatedAt
         };
     }
 }

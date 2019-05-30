@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from "typeorm";
 import * as bcrypt from 'bcryptjs';
 import { Plan } from "./plan.entity";
-import { CreatePlanDto } from "./dto/plan.dto";
+import { CreatePlanDto } from "./dto/create-plan.dto";
 import { UpdatePlanDto } from "./dto/update-role.dto";
 
 @EntityRepository(Plan)

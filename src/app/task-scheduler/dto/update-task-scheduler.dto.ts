@@ -1,6 +1,6 @@
 import { IsString, IsIn, IsByteLength, IsEmail, MinLength } from 'class-validator';
 
-export class UpdateTaskSchedulerDto {
+export class UpdateSchedulerDto {
     @IsString()   
     readonly name: string;
 

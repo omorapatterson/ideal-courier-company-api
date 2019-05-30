@@ -26,9 +26,9 @@ export class CompanyService {
 
             this.companyRepository.createCompany(companyDto).then((company: Company) => {
                 resolve(company);
-                this.userService.create(userDto).then((user: User) => {
+                this.userService.create(userDto, company.id).then((user: User) => {
                 }).catch((error) => {
-                    reject(error);
+                    reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
                 });
             }).catch((error) => {
                 reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));

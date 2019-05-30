@@ -3,11 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
 import { TaskRepository } from './task.repository';
-import { Task } from './Task.entity';
+import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { CreateSchedulerDto } from '../task-scheduler/dto/create-task-scheduler.dto'
+import { TaskScheduler } from '../task-scheduler/task-scheduler.entity'
+import { TaskSchedulerService } from '../task-scheduler/task-scheduler.service'
 import { ConfigService } from '../common/config/config.service';
 import { ITask } from './interfaces/task.interface';
-import { UpdateTaskDto } from './dto/update-Task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { NotFoundResult, ErrorResult, BadRequestResult, InternalServerErrorResult } from '../common/error-manager/errors';
 import { ErrorCode } from '../common/error-manager/error-codes';
 
@@ -16,13 +19,18 @@ export class TaskService {
 
     constructor(
         @InjectRepository(Task)
-        private readonly taskRepository: TaskRepository
+        private readonly taskRepository: TaskRepository,
+        private readonly taskSchedulerService: TaskSchedulerService,
     ) { }
 
-    create(TaskDto: CreateTaskDto): Promise<ITask> {
+    create(taskDto: CreateTaskDto, scheduler: CreateSchedulerDto): Promise<ITask> {
         return new Promise((resolve: (result: ITask) => void, reject: (reason: ErrorResult) => void): void => {
-            this.taskRepository.createTask(TaskDto).then((task: Task) => {
+            this.taskRepository.createTask(taskDto).then((task: Task) => {
                 resolve(task);
+                this.taskSchedulerService.create(scheduler, task.id).then((taskScheduler: TaskScheduler) => {
+                }).catch((error) => {
+                    reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
+                });
             }).catch((error) => {
                 reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
             });

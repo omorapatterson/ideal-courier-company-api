@@ -60,6 +60,9 @@ export class AuthService {
             lastName: user.lastName,
             email: user.email,
             role: user.role,
+            //lastLogin: user.lastLogin,
+            phone: user.phone,
+            language: user.language,            
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         };

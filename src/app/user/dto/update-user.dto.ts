@@ -18,6 +18,9 @@ export class UpdateUserDto {
     })
     readonly email: string;
 
+    @IsString()   
+    readonly phone: string;
+
     @IsString()
     @MinLength(5, {
         message: "Invalid password length"

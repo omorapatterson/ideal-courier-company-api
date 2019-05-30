@@ -16,14 +16,14 @@ export class UserService {
         private readonly userRepository: UserRepository
     ) { }
 
-    create(userDto: CreateUserDto): Promise<User> {
+    create(userDto: CreateUserDto, companyId: string ): Promise<User> {
         return new Promise((resolve: (result: User) => void, reject: (reason: ErrorResult) => void): void => {
             this.userRepository.getUserByEmail(userDto.email).then((user: User) => {
                 if (user) {
                     reject(new BadRequestResult(ErrorCode.UnknownEntity, 'There is a user with same email!'));
                     return;
                 }
-                this.userRepository.createUser(userDto).then((user: User) => {
+                this.userRepository.createUser(userDto, companyId).then((user: User) => {
                     resolve(user);
                 });
             }).catch((error) => {

@@ -1,10 +1,14 @@
-export interface ITaskDriver {
+import { IsString, IsIn, IsByteLength, IsEmail, MinLength } from 'class-validator';
 
+export class CreateTaskLogDto {
+    
     readonly id: string;
 
     readonly comments: string;
 
     readonly description: string;  
+
+    readonly ipAddress: string;
 
     readonly lat: string;
 

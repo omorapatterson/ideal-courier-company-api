@@ -7,6 +7,8 @@ export interface ICompany {
     readonly city: string;
     readonly state: string;
     readonly zip: number;
+    readonly language: string;    
+    readonly driverAssignRadius: number;
     readonly createdAt: Date;
     readonly updatedAt: Date;
 }

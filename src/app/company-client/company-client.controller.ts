@@ -25,13 +25,13 @@ import { ICompanyClient } from './interfaces/company-client.interface';
 
 
 @Controller('company-clients')
-@UseGuards(AuthGuard(), RolesGuard)
+//@UseGuards(AuthGuard(), RolesGuard)
 export class CompanyClientController {
 
     constructor(private readonly companyClientService: CompanyClientService) { }
 
     @Post()
-    @Roles('expert')
+    //@Roles('expert')
     @UsePipes(new ValidationPipe())
     async create(@Body() CompanyClient: CreateCompanyClientDto) {
         return this.companyClientService.create(CompanyClient)

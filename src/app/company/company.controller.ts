@@ -7,12 +7,11 @@ import { Roles } from '../common/decorator/roles.decorator';
 import { ErrorManager } from '../common/error-manager/error-manager';
 import { ErrorResult } from '../common/error-manager/errors';
 import { ValidationPipe } from '../common/pipes/validation.pipe';
-import { CreateUserDto } from '../user/dto/create-user.dto';
 import { User } from '../user/user.entity';
 //
 import { Company } from './company.entity';
 import { CompanyService } from './company.service';
-import { CreateCompanyDto } from './dto/create-company.dto';
+import { RegisterCompanyDto } from './dto/create-company.dto';
 import { FilterCompanyDto } from './dto/filter-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { ICompany } from './interfaces/company.interface';
@@ -27,8 +26,8 @@ export class CompanyController {
     @Post()
     @Roles('adviser')
     @UsePipes(new ValidationPipe())
-    async create(@Body() company: CreateCompanyDto, @Body() user: CreateUserDto) {
-        return this.companyService.create(company, user)
+    async create(@Body() registerCompany: RegisterCompanyDto) {
+        return this.companyService.create(registerCompany.company, registerCompany.user)
             .then((company: Company) => {
                 return this.getICompany(company);
             })
@@ -96,7 +95,9 @@ export class CompanyController {
             address: company.address,
             city: company.city,
             state: company.state,
-            zip: company.zip,           
+            zip: company.zip,  
+            language: company.language,            
+            driverAssignRadius: company.driverAssignRadius,            
             createdAt: company.createdAt,
             updatedAt: company.updatedAt,
         };

@@ -17,13 +17,13 @@ import { Roles } from '../common/decorator/roles.decorator';
 import { ErrorResult } from '../common/error-manager/errors';
 import { ErrorManager } from '../common/error-manager/error-manager';
 //
-import { CreatePlanDto } from './dto/plan.dto';
+import { CreatePlanDto } from './dto/create-plan.dto';
 import { UpdatePlanDto } from './dto/update-role.dto';
 import { IPlan } from './interfaces/plan.interface';
 import { Plan } from './plan.entity';
 import { PlanService } from './plan.service';
 
-@Controller('roles')
+@Controller('plans')
 //@UseGuards(AuthGuard(), RolesGuard)
 export class PlanController {
 

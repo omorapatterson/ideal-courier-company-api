@@ -23,13 +23,13 @@ import { ErrorManager } from '../common/error-manager/error-manager';
 import { Driver } from './driver.entity';
 
 @Controller('drivers')
-@UseGuards(AuthGuard(), RolesGuard)
+//@UseGuards(AuthGuard(), RolesGuard)
 export class DriverController {
 
     constructor(private readonly driverService: DriverService) { }
 
     @Post()
-    @Roles('expert')
+    //@Roles('expert')
     @UsePipes(new ValidationPipe())
     async create(@Body() driver: CreateDriverDto) {
         return this.driverService.create(driver)
