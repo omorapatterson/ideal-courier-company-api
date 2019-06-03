@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     validate(payload: JwtPayload) {
-        console.log(JSON.stringify(payload));
+        //console.log(JSON.stringify(payload));
         return this.authService.validate(payload).then((user: User) => {
             if (!user || user.id !== payload.userId) {
                 throw new UnauthorizedException();

@@ -8,3 +8,9 @@ export class CreateRoleDto {
     readonly description: string; 
 
 }
+
+export class CreateRolePermisionsDto {
+    role: CreateRoleDto;
+    permisions: string[]; 
+
+}

@@ -16,4 +16,4 @@ import { RolePermisionService } from './role-permision.service';
         RolePermisionService,
     ],
 })
-export class QuestionnaireSubjectModule { }
+export class RolePermisionModule { }

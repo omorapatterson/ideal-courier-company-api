@@ -17,14 +17,14 @@ import { Roles } from '../common/decorator/roles.decorator';
 import { ErrorResult } from '../common/error-manager/errors';
 import { ErrorManager } from '../common/error-manager/error-manager';
 //
-import { CreateRoleDto } from './dto/role.dto';
+import { CreateRoleDto, CreateRolePermisionsDto } from './dto/role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { IRole } from './interfaces/role.interface';
 import { Role } from './role.entity';
 import { RoleService } from './role.service';
 
 @Controller('roles')
-//@UseGuards(AuthGuard(), RolesGuard)
+@UseGuards(AuthGuard(), RolesGuard)
 export class RoleController {
 
     constructor(private readonly roleService: RoleService) { }
@@ -32,8 +32,8 @@ export class RoleController {
     @Post()
     //@Roles('expert')
     @UsePipes(new ValidationPipe())
-    async create(@Body() role: CreateRoleDto) {
-        return this.roleService.create(role)
+    async create(@Body() rolePermisions: CreateRolePermisionsDto) {
+        return this.roleService.create(rolePermisions.role, rolePermisions.permisions)
             .then((role: Role) => {
                 return this.getIRole(role);
             })

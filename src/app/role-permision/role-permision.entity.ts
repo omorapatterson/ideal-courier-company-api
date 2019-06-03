@@ -8,9 +8,6 @@ export class RolePermision {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ type: 'int' })
-    position: number;
-
     @ManyToOne(type => Permision, permision => permision.roles)
     @JoinColumn({ name: "permision", referencedColumnName: 'id' })
     permision: Permision;

@@ -1,7 +1,9 @@
 import { Injectable, HttpException, HttpStatus, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-
+//
+import { RolePermisionService } from '../role-permision/role-permision.service';
+//
 import { RoleRepository } from './role.repository';
 import { Role } from './role.entity';
 import { CreateRoleDto } from './dto/role.dto';
@@ -16,13 +18,18 @@ export class RoleService {
 
     constructor(
         @InjectRepository(Role)
-        private readonly roleRepository: RoleRepository
+        private readonly roleRepository: RoleRepository,
+        public rolePermisionService: RolePermisionService
     ) { }
 
-    create(roleDto: CreateRoleDto): Promise<IRole> {
+    create(roleDto: CreateRoleDto, permisions: string[]): Promise<IRole> {
         return new Promise((resolve: (result: IRole) => void, reject: (reason: ErrorResult) => void): void => {
             this.roleRepository.createRole(roleDto).then((role: Role) => {
-                resolve(role);
+                this.rolePermisionService.create(role.id, permisions).then(() => {                    
+                    resolve(role);
+                }).catch((error) => {
+                    reject(error);
+                });
             }).catch((error) => {
                 reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
             });

@@ -23,7 +23,7 @@ import { IPermision } from './interfaces/permision.interface';
 import { Permision } from './permision.entity';
 import { PermisionService } from './permision.service';
 
-@Controller('permision')
+@Controller('permisions')
 //@UseGuards(AuthGuard(), RolesGuard)
 export class PermisionController {
 
