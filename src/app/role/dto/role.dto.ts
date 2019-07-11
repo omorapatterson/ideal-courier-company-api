@@ -7,10 +7,6 @@ export class CreateRoleDto {
     @IsString()
     readonly description: string; 
 
-}
-
-export class CreateRolePermisionsDto {
-    role: CreateRoleDto;
-    permisions: string[]; 
+    permisions?: string[];
 
 }

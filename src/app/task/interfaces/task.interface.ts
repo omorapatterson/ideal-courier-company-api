@@ -1,6 +1,10 @@
+import { ITaskScheduler } from '../../task-scheduler/interfaces/task-scheduler.interface'
+
 export interface ITask {
 
     readonly id: string;
+
+    readonly companyId?: string;
 
     readonly comments: string;
 
@@ -17,6 +21,8 @@ export interface ITask {
     readonly taskDate: Date;
 
     readonly transType: string;
+
+    readonly scheduler?: ITaskScheduler,
 
     readonly createdAt: Date;
 

@@ -1,12 +1,14 @@
 import { IsString, IsIn, IsByteLength, IsEmail, MinLength } from 'class-validator';
 
 export class UpdateTaskDriverDto {
-   
+    
     readonly id: string;
 
     readonly comments: string;
 
     readonly description: string;  
+
+    readonly ipAddress: string;
 
     readonly lat: string;
 
@@ -21,5 +23,4 @@ export class UpdateTaskDriverDto {
     readonly createdAt: Date;
 
     readonly updatedAt: Date;
-    
 }

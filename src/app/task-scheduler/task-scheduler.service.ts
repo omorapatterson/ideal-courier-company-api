@@ -19,9 +19,9 @@ export class TaskSchedulerService {
         private readonly taskSchedulerRepository: TaskSchedulerRepository
     ) { }
 
-    create(taskSchedulerDto: CreateSchedulerDto, taskId: string): Promise<ITaskScheduler> {
+    create(taskSchedulerDto: CreateSchedulerDto): Promise<ITaskScheduler> {
         return new Promise((resolve: (result: ITaskScheduler) => void, reject: (reason: ErrorResult) => void): void => {
-            this.taskSchedulerRepository.createTaskScheduler(taskSchedulerDto, taskId).then((TaskScheduler: TaskScheduler) => {
+            this.taskSchedulerRepository.createTaskScheduler(taskSchedulerDto).then((TaskScheduler: TaskScheduler) => {
                 resolve(TaskScheduler);
             }).catch((error) => {
                 reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
@@ -61,6 +61,18 @@ export class TaskSchedulerService {
         });
     }
 
+    getTaskSchedulerByTaskId(taskId: string): TaskScheduler {
+
+        this.taskSchedulerRepository.getTaskSchedulerByTaskId(taskId).then((taskScheduler: ITaskScheduler) => {
+            if (!taskScheduler) {
+                return taskScheduler;
+            }
+        }).catch((error) => {
+            return null;
+        });
+        return null;
+    }
+
     getTaskSchedulers(): Promise<ITaskScheduler[]> {
         return new Promise((resolve: (result: ITaskScheduler[]) => void, reject: (reason: ErrorResult) => void): void => {
             this.taskSchedulerRepository.getTaskSchedulers().then((taskSchedulers: TaskScheduler[]) => {
@@ -89,5 +101,5 @@ export class TaskSchedulerService {
                 reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
             });
         });
-    }   
+    }
 }

@@ -43,7 +43,7 @@ export class TeamController {
     }
 
     @Put(':id')
-    @Roles('expert')
+    //@Roles('expert')
     @UsePipes(new ValidationPipe({ skipMissingProperties: true }))
     async update(@Param('id') id: string, @Body() team: UpdateTeamDto) {
         return this.teamService.update(id, team)
@@ -59,7 +59,7 @@ export class TeamController {
     async getTeam(@Param('id') id: string) {
         return this.teamService.getTeam(id)
             .then((team: Team) => {
-                return this.getITeam(team);
+                return { data: this.getITeam(team) };
             })
             .catch((error: ErrorResult) => {
                 return ErrorManager.manageErrorResult(error);
@@ -67,13 +67,15 @@ export class TeamController {
     }
 
     @Get()
-    @Roles('expert')
+    //@Roles('expert')
     async getTeams() {
         return this.teamService.getTeams()
             .then((teams: Team[]) => {
-                return teams.map((team: Team) => {
-                    return this.getITeam(team);
-                });
+                return {
+                    data: teams.map((team: Team) => {
+                        return this.getITeam(team);
+                    })
+                }
             })
             .catch((error: ErrorResult) => {
                 return ErrorManager.manageErrorResult(error);
@@ -81,7 +83,7 @@ export class TeamController {
     }
 
     @Delete(':id')
-    @Roles('expert')
+    //@Roles('expert')
     async delete(@Param('id') id: string) {
         return this.teamService.delete(id)
             .then((team: Team) => {

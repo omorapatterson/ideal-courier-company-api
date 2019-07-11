@@ -17,15 +17,16 @@ import { Roles } from '../common/decorator/roles.decorator';
 import { ErrorResult } from '../common/error-manager/errors';
 import { ErrorManager } from '../common/error-manager/error-manager';
 //
+import { GetUser } from '../common/decorator/user.decorator';
+import { User } from '../user/user.entity';
 import { CreateTaskDto, CreateTaskWithSchedulerDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ITask } from './interfaces/task.interface';
 import { Task } from './task.entity';
 import { TaskService } from './task.service';
 
-
 @Controller('tasks')
-//@UseGuards(AuthGuard(), RolesGuard)
+@UseGuards(AuthGuard(), RolesGuard)
 export class TaskController {
 
     constructor(private readonly taskService: TaskService) { }
@@ -33,8 +34,8 @@ export class TaskController {
     @Post()
     //@Roles('expert')
     @UsePipes(new ValidationPipe())
-    async create(@Body() taskScheduler: CreateTaskWithSchedulerDto) {
-        return this.taskService.create(taskScheduler.task, taskScheduler.scheduler)
+    async create(@GetUser() user: User, @Body() taskScheduler: CreateTaskWithSchedulerDto) {
+        return this.taskService.create(user, taskScheduler.task, taskScheduler.scheduler)
             .then((task: Task) => {
                 return this.getITask(task);
             })
@@ -57,7 +58,7 @@ export class TaskController {
     }
 
     @Get(':id')
-    async getUser(@Param('id') id: string) {
+    async getTask(@Param('id') id: string) {
         return this.taskService.getTask(id)
             .then((task: Task) => {
                 return this.getITask(task);
@@ -68,13 +69,15 @@ export class TaskController {
     }
 
     @Get()
-    @Roles('expert')
-    async getUsers() {
-        return this.taskService.getTasks()
+    //@Roles('expert')
+    async getTasks(@GetUser() user: User) {
+        return this.taskService.getTasks(user)
             .then((tasks: Task[]) => {
-                return tasks.map((task: Task) => {
-                    return this.getITask(task);
-                });
+                return {
+                    data: tasks.map((task: Task) => {
+                        return this.getITask(task);
+                    })
+                }
             })
             .catch((error: ErrorResult) => {
                 return ErrorManager.manageErrorResult(error);
@@ -85,27 +88,29 @@ export class TaskController {
     @Roles('expert')
     async delete(@Param('id') id: string) {
         return this.taskService.delete(id)
-        .then((task: Task) => {
-            return this.getITask(task);
-        })
-        .catch((error: ErrorResult) => {
-            return ErrorManager.manageErrorResult(error);
-        });
+            .then((task: Task) => {
+                return this.getITask(task);
+            })
+            .catch((error: ErrorResult) => {
+                return ErrorManager.manageErrorResult(error);
+            });
     }
 
     getITask(task: Task): ITask {
         return {
             id: task.id,
+            companyId: task.company.id,
             description: task.description,
             comments: task.comments,
             ipAddress: task.ipAddress,
             lat: task.lat,
             lon: task.lon,
             pieces: task.pieces,
-            taskDate: task.taskDate,            
+            taskDate: task.taskDate,
             transType: task.description,
             createdAt: task.createdAt,
-            updatedAt: task.updatedAt
+            updatedAt: task.updatedAt,
+            scheduler: task.sheduler
         };
     }
 }

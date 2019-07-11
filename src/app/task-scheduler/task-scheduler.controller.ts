@@ -27,76 +27,90 @@ import { TaskSchedulerService } from './task-scheduler.service';
 //@UseGuards(AuthGuard(), RolesGuard)
 export class TaskSchedulerController {
 
-    constructor(private readonly taskSchedulerService: TaskSchedulerService) { }
+    constructor(private taskSchedulerService: TaskSchedulerService) { }
 
     @Post()
     //@Roles('expert')
     @UsePipes(new ValidationPipe())
-    async create(@Body() taskScheduler: CreateSchedulerDto, @Body() taskId: string) {
-        return this.taskSchedulerService.create(taskScheduler, taskId)
-        .then((taskScheduler: TaskScheduler) => {
-            return this.getITaskScheduler(taskScheduler);
-        })
-        .catch((error: ErrorResult) => {
-            return ErrorManager.manageErrorResult(error);
-        });
+    async create(@Body() taskScheduler: CreateSchedulerDto) {
+        return this.taskSchedulerService.create(taskScheduler)
+            .then((taskScheduler: TaskScheduler) => {
+                return this.getITaskScheduler(taskScheduler);
+            })
+            .catch((error: ErrorResult) => {
+                return ErrorManager.manageErrorResult(error);
+            });
     }
 
     @Put(':id')
     @Roles('expert')
     @UsePipes(new ValidationPipe({ skipMissingProperties: true }))
-    async update(@Param('id') id: string, @Body() taskScheduler: UpdateSchedulerDto){
+    async update(@Param('id') id: string, @Body() taskScheduler: UpdateSchedulerDto) {
         return this.taskSchedulerService.update(id, taskScheduler)
-        .then((taskScheduler: TaskScheduler) => {
-            return this.getITaskScheduler(taskScheduler);
-        })
-        .catch((error: ErrorResult) => {
-            return ErrorManager.manageErrorResult(error);
-        });
+            .then((taskScheduler: TaskScheduler) => {
+                return this.getITaskScheduler(taskScheduler);
+            })
+            .catch((error: ErrorResult) => {
+                return ErrorManager.manageErrorResult(error);
+            });
     }
 
     @Get(':id')
-    async getTaskScheduler(@Param('id') id: string){
+    async getTaskScheduler(@Param('id') id: string) {
         return this.taskSchedulerService.getTaskScheduler(id)
-        .then((taskScheduler: TaskScheduler) => {
-            return this.getITaskScheduler(taskScheduler);
-        })
-        .catch((error: ErrorResult) => {
-            return ErrorManager.manageErrorResult(error);
-        });
+            .then((taskScheduler: TaskScheduler) => {
+                return this.getITaskScheduler(taskScheduler);
+            })
+            .catch((error: ErrorResult) => {
+                return ErrorManager.manageErrorResult(error);
+            });
     }
 
     @Get()
     @Roles('expert')
-    async getTaskSchedulers(){
+    async getTaskSchedulers() {
         return this.taskSchedulerService.getTaskSchedulers()
-        .then((taskSchedulers: TaskScheduler[]) => {
-            return taskSchedulers.map((taskScheduler: TaskScheduler) => {
-                return this.getITaskScheduler(taskScheduler);
+            .then((taskSchedulers: TaskScheduler[]) => {
+                return taskSchedulers.map((taskScheduler: TaskScheduler) => {
+                    return this.getITaskScheduler(taskScheduler);
+                });
+            })
+            .catch((error: ErrorResult) => {
+                return ErrorManager.manageErrorResult(error);
             });
-        })
-        .catch((error: ErrorResult) => {
-            return ErrorManager.manageErrorResult(error);
-        });
     }
 
     @Delete(':id')
     @Roles('expert')
-    async delete(@Param('id') id: string){
+    async delete(@Param('id') id: string) {
         return this.taskSchedulerService.delete(id)
-        .then((taskScheduler: TaskScheduler) => {
-            return this.getITaskScheduler(taskScheduler);
-        })
-        .catch((error: ErrorResult) => {
-            return ErrorManager.manageErrorResult(error);
-        });
+            .then((taskScheduler: TaskScheduler) => {
+                return this.getITaskScheduler(taskScheduler);
+            })
+            .catch((error: ErrorResult) => {
+                return ErrorManager.manageErrorResult(error);
+            });
     }
 
-    getITaskScheduler(TaskScheduler: TaskScheduler): ITaskScheduler {
+    getITaskScheduler(taskScheduler: TaskScheduler): ITaskScheduler {
         return {
-            id: TaskScheduler.id,
-            createdAt: TaskScheduler.createdAt,
-            updatedAt: TaskScheduler.updatedAt
+            id: taskScheduler.id,
+            createdAt: taskScheduler.createdAt,
+            intervalTime: taskScheduler.intervalTime,
+            friday: taskScheduler.friday,
+            finish: taskScheduler.finish,
+            finishAfterRepetitions: taskScheduler.finishAfterRepetitions,
+            finishDate: taskScheduler.finishDate,
+            monday: taskScheduler.monday,
+            monthOption: taskScheduler.monthOption,
+            repeatEach: taskScheduler.repeatEach,
+            repetitions: taskScheduler.repetitions,
+            saturday: taskScheduler.friday,
+            sunday: taskScheduler.sunday,
+            tuesday: taskScheduler.tuesday,
+            thursday: taskScheduler.thursday,
+            updatedAt: taskScheduler.updatedAt,
+            wednesday: taskScheduler.wednesday,
         };
     }
 }

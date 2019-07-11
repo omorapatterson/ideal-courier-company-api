@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Cron, Interval, Timeout, NestSchedule } from 'nest-schedule';
- 
+import { TaskService } from '../task/task.service'
+
 @Injectable() // Only support SINGLETON scope
-export class ScheduleService extends NestSchedule {    
-  @Cron('15 * * * * ?', {
-    startTime: new Date(), 
-    endTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-  })
+export class ScheduleService extends NestSchedule {  
+  
+  constructor( public taskService: TaskService){
+    super();
+  }
+  @Cron('30 0 0 ? * *')
   async cronJob() {
-    console.log('executing cron job');
+    this.taskService.createShedulerTask();
   }
   
   @Timeout(5000)

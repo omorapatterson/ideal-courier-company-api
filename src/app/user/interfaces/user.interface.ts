@@ -1,4 +1,7 @@
+
 export interface IUser {
+
+    readonly companyId?: string;
 
     readonly id: string;
 
@@ -12,7 +15,7 @@ export interface IUser {
 
     readonly language: string; 
 
-    //readonly lastLogin: Date; 
+    //zreadonly lastLogin: Date; 
 
     readonly phone: string;
 

@@ -5,6 +5,7 @@ import { CompanyClient } from '../company-client/company-client.entity';
 import { Driver } from '../driver/driver.entity';
 import { Route } from '../route/route.entity';
 import { Stop } from '../stop/stop.entity';
+import { TaskScheduler } from '../task-scheduler/task-scheduler.entity';
 
 @Entity()
 export class Task {
@@ -41,11 +42,15 @@ export class Task {
   @Column()
   updatedAt: Date;
 
-  /*@ManyToOne(type => Company)
+  @ManyToOne(type => Company)
   @JoinColumn({ name: "company", referencedColumnName: 'id' })
   company: Company;
+  
+  @ManyToOne(type => TaskScheduler)
+  @JoinColumn({ name: "shedulerId", referencedColumnName: 'id' })
+  sheduler: TaskScheduler;
 
-  @ManyToOne(type => CompanyClient)
+  /*@ManyToOne(type => CompanyClient)
   @JoinColumn({ name: "company_client", referencedColumnName: 'id' })
   companyClient: CompanyClient;
 

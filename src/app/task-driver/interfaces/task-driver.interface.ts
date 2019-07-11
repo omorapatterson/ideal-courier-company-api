@@ -1,10 +1,16 @@
+import { ITaskScheduler } from '../../task-scheduler/interfaces/task-scheduler.interface'
+
 export interface ITaskDriver {
 
     readonly id: string;
 
+    readonly companyId?: string;
+
     readonly comments: string;
 
     readonly description: string;  
+
+    readonly ipAddress: string;
 
     readonly lat: string;
 
@@ -16,8 +22,9 @@ export interface ITaskDriver {
 
     readonly transType: string;
 
+    readonly scheduler?: ITaskScheduler,
+
     readonly createdAt: Date;
 
     readonly updatedAt: Date;
-
 }

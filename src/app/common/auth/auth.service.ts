@@ -56,6 +56,7 @@ export class AuthService {
     getIUser(user: User): IUser {
         return {
             id: user.id,
+            companyId: user.company.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,

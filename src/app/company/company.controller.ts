@@ -18,7 +18,7 @@ import { ICompany } from './interfaces/company.interface';
 
 
 @Controller('companies')
-//@UseGuards(AuthGuard(), RolesGuard)
+@UseGuards(AuthGuard(), RolesGuard)
 export class CompanyController {
 
     constructor(private readonly companyService: CompanyService) { }
@@ -61,7 +61,6 @@ export class CompanyController {
     }
 
     @Get()
-    @UsePipes(new ValidationPipe({ skipMissingProperties: true }))
     getCompanies(@GetUser() user: User, @Query() filter: FilterCompanyDto) {
         return this.companyService.getCompanies(user, filter)
             .then((companies: Company[]) => {

@@ -25,10 +25,8 @@ export class DriverService {
                 }
                 this.driverRepository.createDriver(driverDto).then((driver: Driver) => {
                     resolve(driver);
-                });
-            }).catch((error) => {
-                reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
-            });
+                })
+            })
         });
     }
 

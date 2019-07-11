@@ -7,7 +7,7 @@ import { UpdateSchedulerDto } from "./dto/update-task-scheduler.dto";
 @EntityRepository(TaskScheduler)
 export class TaskSchedulerRepository extends Repository<TaskScheduler> {
 
-    async createTaskScheduler(taskSchedulerDto: CreateSchedulerDto, taskId: string) {
+    async createTaskScheduler(taskSchedulerDto: CreateSchedulerDto) {
         const taskScheduler: TaskScheduler = this.create();
         taskScheduler.finish = taskSchedulerDto.finish;
         taskScheduler.finishAfterRepetitions = taskSchedulerDto.finishAfterRepetitions;
@@ -23,8 +23,6 @@ export class TaskSchedulerRepository extends Repository<TaskScheduler> {
         taskScheduler.friday = taskSchedulerDto.friday;
         taskScheduler.saturday = taskSchedulerDto.saturday;
         taskScheduler.sunday = taskSchedulerDto.sunday;
-        taskScheduler.task = <any>{ id: taskId };
-
 
         taskScheduler.updatedAt = new Date();
         taskScheduler.createdAt = new Date();
@@ -38,9 +36,16 @@ export class TaskSchedulerRepository extends Repository<TaskScheduler> {
         taskScheduler.updatedAt = new Date();
         return this.save(taskScheduler);
     }
- 
+
     getTaskScheduler(id: string) {
         return this.findOne({ id });
+    }
+
+    getTaskSchedulerByTaskId(taskId: string) {
+        return this.createQueryBuilder('taskScheduler')
+            .select()
+            .where('taskScheduler.task = :task', { taskId })
+            .getOne();
     }
 
     getTaskSchedulers() {

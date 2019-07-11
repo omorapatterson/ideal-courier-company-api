@@ -48,7 +48,7 @@ export class CompanyRepository extends Repository<Company> {
     }
 
     getCompanies(user: User, filter: FilterCompanyDto) {
-        let query = this.createQueryBuilder("company")
+       /* let query = this.createQueryBuilder("company")
             .select()
             .leftJoinAndSelect("company.activitySector", "activitySector");
 
@@ -65,7 +65,8 @@ export class CompanyRepository extends Repository<Company> {
                     { startDate: filter.startDate, endDate: filter.endDate });
             }
         }
-        return query.getMany();
+        return query.getMany();*/
+        return this.find();
     }
 
     async deleteCompany(id: string) {

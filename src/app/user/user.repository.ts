@@ -70,6 +70,7 @@ export class UserRepository extends Repository<User> {
     getUserByEmail(email: string) {
         return this.createQueryBuilder("user")
             .select()
+            .leftJoinAndSelect('user.company', 'company')
             .where("user.email = :email", { email })
             .andWhere("user.isDeleted = false")
             .getOne();

@@ -22,19 +22,19 @@ export class Driver {
     @Column()
     password: string;
 
-    @Column({ default: false })
+    @Column({ nullable: true })
     isDeleted: boolean;
 
-    @Column({ default: false })
+    @Column({ nullable: true })
     available: boolean;
 
-    @Column({ default: false })
+    @Column({ nullable: true })
     transportType: string;
 
-    @Column({ default: false })
+    @Column({ nullable: true })
     status: string;
 
-    @Column({ default: false })
+    @Column({ nullable: true })
     transportDescription: string;
 
     @Column({nullable: true})

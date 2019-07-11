@@ -6,11 +6,14 @@ import { TaskDriverService } from './task-driver.service';
 import { TaskDriverController } from './task-driver.controller';
 import { TaskDriver } from './task-driver.entity';
 import { TaskDriverRepository } from './task-driver.repository';
+import { TaskSchedulerModule } from '../task-scheduler/task-scheduler.module';
+
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([TaskDriver, TaskDriverRepository]),
-    PassportModule.register({ defaultStrategy: 'jwt' })
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    TaskSchedulerModule
   ],
   providers: [
     TaskDriverService
@@ -20,4 +23,4 @@ import { TaskDriverRepository } from './task-driver.repository';
     TaskDriverService
   ]
 })
-export class taskDriverModule {}
+export class TaskDriverModule {}

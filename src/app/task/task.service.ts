@@ -2,8 +2,11 @@ import { Injectable, HttpException, HttpStatus, NotFoundException, BadRequestExc
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
+import { TaskDriverService } from '../task-driver/task-driver.service';
+
 import { TaskRepository } from './task.repository';
 import { Task } from './task.entity';
+import { User } from '../user/user.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { CreateSchedulerDto } from '../task-scheduler/dto/create-task-scheduler.dto'
 import { TaskScheduler } from '../task-scheduler/task-scheduler.entity'
@@ -14,26 +17,30 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { NotFoundResult, ErrorResult, BadRequestResult, InternalServerErrorResult } from '../common/error-manager/errors';
 import { ErrorCode } from '../common/error-manager/error-codes';
 
+import * as moment from 'moment';
+
 @Injectable()
 export class TaskService {
 
     constructor(
         @InjectRepository(Task)
         private readonly taskRepository: TaskRepository,
+        private readonly taskDriverService: TaskDriverService,
         private readonly taskSchedulerService: TaskSchedulerService,
     ) { }
 
-    create(taskDto: CreateTaskDto, scheduler: CreateSchedulerDto): Promise<ITask> {
+    create(user: User, taskDto: CreateTaskDto, scheduler: CreateSchedulerDto): Promise<ITask> {
         return new Promise((resolve: (result: ITask) => void, reject: (reason: ErrorResult) => void): void => {
-            this.taskRepository.createTask(taskDto).then((task: Task) => {
-                resolve(task);
-                this.taskSchedulerService.create(scheduler, task.id).then((taskScheduler: TaskScheduler) => {
-                }).catch((error) => {
+            this.taskSchedulerService.create(scheduler).then((taskScheduler: TaskScheduler) => {
+                this.taskRepository.createTask(user, taskDto, taskScheduler.id).then((task: Task) => {
+                    this.createAllFutureTasks(user, task);
+                    resolve(task);
+                })/*.catch((error) => {
                     reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
-                });
-            }).catch((error) => {
+                });*/
+            })/*.catch((error) => {
                 reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
-            });
+            });*/
         });
     }
 
@@ -69,10 +76,23 @@ export class TaskService {
         });
     }
 
-    getTasks(): Promise<ITask[]> {
+    getTasks(user: User): Promise<ITask[]> {
         return new Promise((resolve: (result: ITask[]) => void, reject: (reason: ErrorResult) => void): void => {
-            this.taskRepository.getTasks().then((roles: Task[]) => {
-                resolve(roles);
+            this.taskRepository.getTasks(user).then((tasks: Task[]) => {
+                tasks.forEach(task => {
+                    this.getAllTaskFutureTasks(task);
+                });
+                resolve(tasks);
+            }).catch((error) => {
+                reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
+            });
+        });
+    }
+
+    getActiveTasks(user: User): Promise<ITask[]> {
+        return new Promise((resolve: (result: ITask[]) => void, reject: (reason: ErrorResult) => void): void => {
+            this.taskRepository.getTasks(user).then((tasks: Task[]) => {
+                resolve(tasks);
             }).catch((error) => {
                 reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
             });
@@ -97,5 +117,59 @@ export class TaskService {
                 reject(new InternalServerErrorResult(ErrorCode.GeneralError, error));
             });
         });
-    }   
+    }
+
+    createShedulerTask() {
+        console.log('executing cron job');
+        /*let allTasks: Task[];
+        this.taskRepository.getTasks().then((tasks: Task[]) => {
+            allTasks = tasks;
+        }).catch((error) => {
+        });
+        allTasks.forEach(task => {
+            console.log(task.id);
+            this.taskSchedulerService.getTaskSchedulerByTaskId(task.id);
+            
+        });*/
+    }
+
+    getAllTaskFutureTasks(task: Task) {
+        let repetitions = 0;
+        let date = moment();
+        let lastDayOfYear = moment(date.year() + '-12-31', 'YYYY-MM-DD');
+        if (task.sheduler.intervalTime = 'week') {
+            while (date < lastDayOfYear) {
+                date.add(1, 'days').calendar();
+                console.log(date);
+            }
+        }
+    }
+
+    createAllFutureTasks(user: User, task: Task) {       
+        let repetitions = 0;
+        let startDate = moment(task.taskDate);
+        let date = moment();
+        let lastDayOfYear = moment(date.year() + '-12-31', 'YYYY-MM-DD');
+        if (task.sheduler.intervalTime = 'week') {
+            while (startDate <= lastDayOfYear) {                
+                console.log(startDate);
+                startDate.add(1, 'days').calendar();
+                //this.taskDriverService.create(user, task).then((taskDriver: ITask) => {})
+            }
+        }
+    }
+
+    getAllTasks(user: User, task: Task) {        
+        let repetitions = 0;
+        let startDate = moment(task.taskDate);
+        let date = moment();
+        let lastDayOfYear = moment(date.year() + '-12-31', 'YYYY-MM-DD');
+        if (task.sheduler.intervalTime = 'week') {
+            while (startDate <= lastDayOfYear) {                
+                console.log(startDate);
+                startDate.add(1, 'days').calendar();
+                //this.taskDriverService.create(user, task).then((taskDriver: ITask) => {})
+            }
+        }
+    }
 }

@@ -17,14 +17,14 @@ import { Roles } from '../common/decorator/roles.decorator';
 import { ErrorResult } from '../common/error-manager/errors';
 import { ErrorManager } from '../common/error-manager/error-manager';
 //
-import { CreateRoleDto, CreateRolePermisionsDto } from './dto/role.dto';
+import { CreateRoleDto } from './dto/role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { IRole } from './interfaces/role.interface';
 import { Role } from './role.entity';
 import { RoleService } from './role.service';
 
 @Controller('roles')
-@UseGuards(AuthGuard(), RolesGuard)
+//@UseGuards(AuthGuard(), RolesGuard)
 export class RoleController {
 
     constructor(private readonly roleService: RoleService) { }
@@ -32,8 +32,8 @@ export class RoleController {
     @Post()
     //@Roles('expert')
     @UsePipes(new ValidationPipe())
-    async create(@Body() rolePermisions: CreateRolePermisionsDto) {
-        return this.roleService.create(rolePermisions.role, rolePermisions.permisions)
+    async create(@Body() roleDto: CreateRoleDto) {
+        return this.roleService.create(roleDto, roleDto.permisions)
             .then((role: Role) => {
                 return this.getIRole(role);
             })
@@ -43,7 +43,7 @@ export class RoleController {
     }
 
     @Put(':id')
-    @Roles('expert')
+    //@Roles('expert')
     @UsePipes(new ValidationPipe({ skipMissingProperties: true }))
     async update(@Param('id') id: string, @Body() role: UpdateRoleDto) {
         return this.roleService.update(id, role)
@@ -59,7 +59,7 @@ export class RoleController {
     async getRole(@Param('id') id: string) {
         return this.roleService.getRole(id)
             .then((role: Role) => {
-                return this.getIRole(role);
+                return {data: this.getIRole(role)};
             })
             .catch((error: ErrorResult) => {
                 return ErrorManager.manageErrorResult(error);
@@ -67,13 +67,15 @@ export class RoleController {
     }
 
     @Get()
-    @Roles('expert')
+    //@Roles('expert')
     async getRoles() {
         return this.roleService.getRoles()
             .then((roles: Role[]) => {
-                return roles.map((role: Role) => {
-                    return this.getIRole(role);
-                });
+                return {
+                    data: roles.map((role: Role) => {
+                        return this.getIRole(role);
+                    })
+                }
             })
             .catch((error: ErrorResult) => {
                 return ErrorManager.manageErrorResult(error);
@@ -85,7 +87,7 @@ export class RoleController {
     async delete(@Param('id') id: string) {
         return this.roleService.delete(id)
             .then((role: Role) => {
-                return this.getIRole(role);
+                return {data: this.getIRole(role)}
             })
             .catch((error: ErrorResult) => {
                 return ErrorManager.manageErrorResult(error);
